@@ -9,32 +9,58 @@ import { createStructuredSelector } from "reselect";
 import { selectCartItems } from "../../redux/cart/cart.selectors";
 import { toggleCartHidden } from "../../redux/cart/cart.action";
 
-import "./cart-dropdown.styles.scss";
+import styled from "styled-components";
+const CartDropdownContainer = styled.div`
+  position: absolute;
+  width: 350px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: white;
+  top: 100px;
+  right: 40px;
+  z-index: 5;
+`;
 
-const CartDropdown = ({ cartItems, history, dispatch }) => {
-  return (
-    <div className="cart-dropdown">
-      <div className="cart-items">
-        {cartItems.length ? (
-          cartItems.map((cartItem) => (
-            <CartItem key={cartItem.id} item={cartItem} />
-          ))
-        ) : (
-          <span className="empty-message">Your cart is empty</span>
-        )}
-      </div>
-      <CustomButton
-        onClick={() => {
-          history.push("/checkout");
-          dispatch(toggleCartHidden());
-        }}
-      >
-        Go To Checkout
-      </CustomButton>
-    </div>
-  );
-};
+const CartDropdownButton = styled(CustomButton)`
+  margin-top: auto;
+`;
 
+const EmptyMessageContainer = styled.span`
+  font-size: 18px;
+  margin: 50px auto;
+`;
+
+const CartItemsContainer = styled.div`
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+`;
+
+const CartDropdown = ({ cartItems, history, dispatch }) => (
+  <CartDropdownContainer>
+    <CartItemsContainer>
+      {cartItems.length ? (
+        cartItems.map((cartItem) => (
+          <CartItem key={cartItem.id} item={cartItem} />
+        ))
+      ) : (
+        <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
+      )}
+    </CartItemsContainer>
+    <CartDropdownButton
+      onClick={() => {
+        history.push("/checkout");
+        dispatch(toggleCartHidden());
+      }}
+    >
+      GO TO CHECKOUT
+    </CartDropdownButton>
+  </CartDropdownContainer>
+);
 const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
 });

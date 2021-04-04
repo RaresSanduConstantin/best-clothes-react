@@ -11,39 +11,79 @@ import { selectCurrentUser } from "../../redux/user/user.selectors";
 
 import { ReactComponent as Logo } from "../../assets/swing-btn.svg";
 
-import "./header.styles.scss";
+// import {
+//   HeaderContainer,
+//   LogoContainer,
+//   UserNameContainer,
+//   OptionsContainer,
+//   OptionLink,
+//   OptionDiv,
+// } from "./header.styles";
+
+import styled from "styled-components";
+
+const HeaderContainer = styled.div`
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 25px;
+`;
+
+const LogoContainer = styled(Link)`
+  height: 100%;
+  width: 50px;
+  // padding: 25px;
+`;
+
+const UserNameContainer = styled.div`
+  font-size: 20px;
+  font-weight: bolder;
+  width: 50%;
+  height: 100%;
+  padding: 10px 15px;
+`;
+
+const OptionsContainer = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 20px;
+  font-weight: bolder;
+`;
+
+const Option = styled(Link)`
+  padding: 10px 15px;
+  cursor: pointer;
+`;
 
 const Header = ({ currentUser, hidden }) => {
   return (
-    <div className="header">
-      <Link className="logo-container" to="/">
+    <HeaderContainer>
+      <LogoContainer to="/">
         <Logo className="logo" />
-      </Link>
-      <div className="user-name">{`Hi ${
+      </LogoContainer>
+      <UserNameContainer>{`Hi ${
         currentUser ? currentUser.displayName : "There"
-      } `}</div>
-      <div className="options">
-        <Link to="/shop" className="option">
-          Shop
-        </Link>
-        <Link to="/contact" className="option">
-          Contact
-        </Link>
+      } `}</UserNameContainer>
+      <OptionsContainer>
+        <Option to="/shop">Shop</Option>
+        <Option to="/contact">Contact</Option>
 
         {currentUser ? (
-          <div className="option" onClick={() => auth.signOut()}>
+          <Option as="div" onClick={() => auth.signOut()}>
             Sign Out
-          </div>
+          </Option>
         ) : (
-          <Link to="/signin" className="option">
-            Sign In
-          </Link>
+          <Option to="/signin">Sign In</Option>
         )}
 
         <CartIcon />
-      </div>
+      </OptionsContainer>
       {hidden ? null : <CartDropdown />}
-    </div>
+    </HeaderContainer>
   );
 };
 
