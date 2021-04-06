@@ -12,6 +12,8 @@ const config = {
   measurementId: "G-ZCNP453P8E",
 };
 
+firebase.initializeApp(config);
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -71,7 +73,14 @@ export const convertCollectionsSnapshotToMap = (collections) => {
   }, {});
 };
 
-firebase.initializeApp(config);
+export const getCurrentUser = () => {
+  return new Promise((res, rej) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      res(userAuth);
+    }, rej);
+  });
+};
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

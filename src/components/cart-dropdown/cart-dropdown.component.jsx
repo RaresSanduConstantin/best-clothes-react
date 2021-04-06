@@ -7,7 +7,7 @@ import CartItem from "../cart-item/cart-item.component";
 
 import { createStructuredSelector } from "reselect";
 import { selectCartItems } from "../../redux/cart/cart.selectors";
-import { toggleCartHidden } from "../../redux/cart/cart.action";
+import { toggleCartHidden, clearCart } from "../../redux/cart/cart.action";
 
 import styled from "styled-components";
 const CartDropdownContainer = styled.div`
@@ -40,7 +40,7 @@ const CartItemsContainer = styled.div`
   overflow: scroll;
 `;
 
-const CartDropdown = ({ cartItems, history, dispatch }) => (
+const CartDropdown = ({ cartItems, history, toggleCartHidden, clearCart }) => (
   <CartDropdownContainer>
     <CartItemsContainer>
       {cartItems.length ? (
@@ -53,8 +53,16 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
     </CartItemsContainer>
     <CartDropdownButton
       onClick={() => {
+        clearCart();
+      }}
+      isGoogleSignIn
+    >
+      Clear Cart
+    </CartDropdownButton>
+    <CartDropdownButton
+      onClick={() => {
         history.push("/checkout");
-        dispatch(toggleCartHidden());
+        toggleCartHidden();
       }}
     >
       GO TO CHECKOUT
@@ -65,4 +73,11 @@ const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
 });
 
-export default withRouter(connect(mapStateToProps)(CartDropdown));
+const mapDispatchToProps = (dispatch) => ({
+  clearCart: () => dispatch(clearCart()),
+  toggleCartHidden: () => dispatch(toggleCartHidden()),
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CartDropdown)
+);
