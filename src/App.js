@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "./App.css";
@@ -14,37 +14,30 @@ import { selectCurrentUser } from "./redux/user/user.selectors";
 import { checkUserSesion } from "./redux/user/user.action";
 import { createStructuredSelector } from "reselect";
 
-class App extends React.Component {
-  componentDidMount() {
-    const { checkUserSesion } = this.props;
+const App = ({ checkUserSesion, currentUser }) => {
+  useEffect(() => {
     checkUserSesion();
-  }
+  }, [checkUserSesion]);
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route exact path="/checkout" component={CheckoutPage} />
+  return (
+    <div>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route path="/shop" component={ShopPage} />
+        <Route exact path="/checkout" component={CheckoutPage} />
 
-          <Route
-            exact
-            path="/signin"
-            render={() =>
-              this.props.currentUser ? (
-                <Redirect to="/" />
-              ) : (
-                <SignInAndSignUpPage />
-              )
-            }
-          />
-        </Switch>
-      </div>
-    );
-  }
-}
+        <Route
+          exact
+          path="/signin"
+          render={() =>
+            currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />
+          }
+        />
+      </Switch>
+    </div>
+  );
+};
 
 const mapDispatchToProps = (dispatch) => ({
   checkUserSesion: () => dispatch(checkUserSesion()),
