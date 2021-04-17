@@ -13,6 +13,7 @@ import Header from "./components/header/header.component";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 import { checkUserSesion } from "./redux/user/user.action";
 import { createStructuredSelector } from "reselect";
+import Contact from "./pages/contactpage/contact.components";
 
 const App = ({ checkUserSesion, currentUser }) => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const App = ({ checkUserSesion, currentUser }) => {
         <Route exact path="/" component={Homepage} />
         <Route path="/shop" component={ShopPage} />
         <Route exact path="/checkout" component={CheckoutPage} />
+        <Route exact path="/contact" component={Contact} />
 
         <Route
           exact
