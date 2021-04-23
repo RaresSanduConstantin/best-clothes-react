@@ -28,6 +28,12 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin-bottom: 25px;
+
+  @media screen and (max-width: 800px) {
+    height: 60px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 `;
 
 const LogoContainer = styled(Link)`
@@ -42,6 +48,11 @@ const UserNameContainer = styled.div`
   width: 50%;
   height: 100%;
   padding: 10px 15px;
+  @media screen and (max-width: 800px) {
+    font-size: 16px;
+  width: 20%;
+    
+  }
 `;
 
 const OptionsContainer = styled.div`
@@ -52,6 +63,10 @@ const OptionsContainer = styled.div`
   justify-content: flex-end;
   font-size: 20px;
   font-weight: bolder;
+  @media screen and (max-width: 800px) {
+    font-size: 16px;
+    width: 80% !important;
+  }
 `;
 
 const Option = styled(Link)`
