@@ -14,6 +14,7 @@ const HomePageContainer = styled.div`
 `;
 
 const HomePage = () => {
+  throw Error;
   return (
     <HomePageContainer>
       <Directory />

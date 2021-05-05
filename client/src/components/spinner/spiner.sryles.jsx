@@ -1,10 +1,6 @@
-import React from "react";
-
 import styled from "styled-components";
 
-import Spiner from "../spinner/spiner";
-
-const SpinnerOverlay = styled.div`
+export const SpinnerOverlay = styled.div`
   height: 60vh;
   width: 100%;
   display: flex;
@@ -12,7 +8,7 @@ const SpinnerOverlay = styled.div`
   align-items: center;
 `;
 
-const SpinnerContainer = styled.div`
+export const SpinnerContainer = styled.div`
   display: inline-block;
   width: 50px;
   height: 50px;
@@ -32,9 +28,3 @@ const SpinnerContainer = styled.div`
     }
   }
 `;
-
-const WithSpinner = (WrappedComponent) => ({ isLoading, ...otherProps }) => {
-  return isLoading ? <Spiner /> : <WrappedComponent {...otherProps} />;
-};
-
-export default WithSpinner;
